@@ -61,7 +61,7 @@ else
         translate {
         dictionary_path => "$dictfile"
         field => "postcode"
-        destination => "[geoip][location]"
+        destination => "[geo][location]"
         }
     }
     output {
@@ -71,9 +71,11 @@ EOF
 fi
 
 echo "Running logstash to test config with test file"
-if echo '{"postcode":"sw1a 0aa"}' | ./$logstashfolder/bin/logstash -f $configfile | grep -q "(51.49984,-0.124663)"
+if echo '{"postcode":"sw1a 0aa"}' | ./$logstashfolder/bin/logstash -f $configfile | grep -q "51.49984,-0.124663"
 then
 echo "Congratulations! Tests pass, you have a working postcode enrichment"
 else
 echo "Something went wrong, I hope you like bash scripts"
+echo "running logstash test again with output"
+echo '{"postcode":"sw1a 0aa"}' | ./$logstashfolder/bin/logstash -f $configfile
 fi

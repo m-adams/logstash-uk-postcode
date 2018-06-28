@@ -20,4 +20,6 @@ with open(inputFile) as inf:
             cols=[]
             for field in columnsRequired:
                 cols.append(row[field].replace(" ", ""))
+                cols.append(row[field].replace("(", ""))
+                cols.append(row[field].replace(")", ""))
             writer.writerow(cols)
